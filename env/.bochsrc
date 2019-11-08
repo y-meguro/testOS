@@ -1,0 +1,2 @@
+ata0-master: type=disk, path=../src/00_boot_only/boot.img, mode=flat, cylinders=20, heads=2, spt=16, translation=auto
+boot: disk
