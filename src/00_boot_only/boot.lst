@@ -1,4 +1,5 @@
-     1 00000000 EBFE                    jmp  $
-     2                                  
-     3 00000002 00<rept>                times 510 - ($ - $$) db 0x00
-     4 000001FE 55AA                    db 0x55, 0xAA
+     1                                  entry:
+     2 00000000 EBFE                            jmp $
+     3                                  
+     4 00000002 00<rept>                        times 510 - ($ - $$) db 0x00
+     5 000001FE 55AA                            db 0x55, 0xAA
