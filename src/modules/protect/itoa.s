@@ -2,89 +2,89 @@ itoa:
         ;---------------------------------------
         ; 【スタックフレームの構築】
         ;---------------------------------------
-        push bp
-        mov bp, sp
+        push ebp
+        mov ebp, esp
 
         ;---------------------------------------
         ; 【レジスタの保存】
         ;---------------------------------------
-        push ax
-        push bx
-        push cx
-        push dx
-        push si
-        push di
+        push eax
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
 
         ;---------------------------------------
         ; 引数を取得
         ;---------------------------------------
-        mov ax, [bp + 4]                        ; val = 数値
-        mov si, [bp + 6]                        ; dst = バッファアドレス
-        mov cx, [bp + 8]                        ; size = 残りバッファサイズ
+        mov eax, [bp + 8]
+        mov esi, [bp + 12]
+        mov ecx, [bp + 16]
 
-        mov di, si
-        add di, cx                              ; dst = &dst[size - 1]
-        dec di
+        mov edi, esi
+        add edi, ecx
+        dec edi
 
-        mov bx, word[bp + 12]                   ; flags = オプション
+        mov ebx, [ebp + 24]
 
         ;---------------------------------------
         ; 符号付き判定
         ;---------------------------------------
-        test bx, 0b0001
+        test ebx, 0b0001
 .10Q:
         je .10E
-        cmp ax, 0
+        cmp eax, 0
 .12Q:
         jge .12E
-        or bx, 0b0010
+        or ebx, 0b0010
 .12E:
 .10E:
 
         ;---------------------------------------
         ; 符号出力判定
         ;---------------------------------------
-        test bx, 0b0010
+        test ebx, 0b0010
 .20Q:
         je .20E
-        cmp ax, 0
+        cmp eax, 0
 .22Q:
         jge .22F
-        neg ax
-        mov [si], byte '-'
+        neg eax
+        mov [esi], byte '-'
         jmp .22E
 .22F:
-        mov [si], byte '+'
+        mov [esi], byte '+'
 .22E:
-        dec cx
+        dec ecx
 .20E:
 
         ;---------------------------------------
         ; ASCII 変換
         ;---------------------------------------
-        mov bx, [bp + 10]
+        mov ebx, [ebp + 20]
 .30L:
-        mov dx, 0
-        div bx
+        mov edx, 0
+        div ebx
 
-        mov si, dx
-        mov dl, byte[.ascii + si]
+        mov esi, edx
+        mov dl, byte[.ascii + esi]
 
-        mov [di], dl
-        dec di
+        mov [edi], dl
+        dec edi
 
-        cmp ax, 0
+        cmp eax, 0
         loopnz .30L
 .30E:
 
         ;---------------------------------------
         ; 空欄を埋める
         ;---------------------------------------
-        cmp cx, 0
+        cmp ecx, 0
 .40Q:
         je .40E
         mov al, ' '
-        cmp [bp + 12], word 0b0100
+        cmp [ebp + 24], word 0b0100
 .42Q:
         jne .42E
         mov al, '0'
@@ -96,18 +96,18 @@ itoa:
         ;---------------------------------------
         ; 【レジスタの復帰】
         ;---------------------------------------
-        pop di
-        pop si
-        pop dx
-        pop cx
-        pop bx
-        pop ax
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        pop eax
 
         ;---------------------------------------
         ; 【スタックフレームの破棄】
         ;---------------------------------------
-        mov sp, bp
-        pop bp
+        mov esp, ebp
+        pop ebp
 
         ret
 
