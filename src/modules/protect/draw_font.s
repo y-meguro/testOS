@@ -1,4 +1,4 @@
-draw_char:
+draw_font:
         ;-----------------------------------------
         ; 【スタックフレームの構築】
         ;-----------------------------------------
@@ -16,41 +16,32 @@ draw_char:
         push	edi
 
         ;-----------------------------------------
-        ; コピー元フォントアドレスを設定
+        ; 基準となる位置をレジスタに保存
         ;-----------------------------------------
-        movzx esi, byte [ebp + 20]
-        shl esi, 4
-        add esi, [FONT_ADR]
-
-        ;-----------------------------------------
-        ; コピー先アドレスを取得
-        ; Adr = 0xA0000 + (640 / 8 * 16) * y + x
-        ;-----------------------------------------
+        mov esi, [ebp + 8]
         mov edi, [ebp + 12]
-        shl edi, 8
-        lea edi, [edi * 4 + edi + 0xA0000]
-        add edi, [ebp + 8]
 
         ;-----------------------------------------
-        ; 1文字分のフォントを出力
+        ; フォントを一覧表示する
         ;-----------------------------------------
-        movzx ebx, word[ebp + 16]
+        mov ecx, 0
+.10L:
+        cmp ecx, 256
+        jae .10E
 
-        cdecl	vga_set_read_plane, 0x03
-        cdecl	vga_set_write_plane, 0x08
-        cdecl	vram_font_copy, esi, edi, 0x08, ebx
+        mov eax, ecx
+        and eax, 0x0F
+        add eax, esi
 
-        cdecl	vga_set_read_plane, 0x02
-        cdecl	vga_set_write_plane, 0x04
-        cdecl	vram_font_copy, esi, edi, 0x04, ebx
+        mov ebx, ecx
+        shr ebx, 4
+        add ebx, edi
 
-        cdecl	vga_set_read_plane, 0x01
-        cdecl	vga_set_write_plane, 0x02
-        cdecl	vram_font_copy, esi, edi, 0x02, ebx
+        cdecl draw_char, eax, ebx, 0x07, ecx
 
-        cdecl	vga_set_read_plane, 0x00
-        cdecl	vga_set_write_plane, 0x01
-        cdecl	vram_font_copy, esi, edi, 0x01, ebx
+        inc ecx
+        jmp .10L
+.10E:
 
         ;-----------------------------------------
         ; 【レジスタの復帰】
