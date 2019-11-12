@@ -8,11 +8,11 @@ draw_str:
         ;-----------------------------------------
         ; 【レジスタの保存】
         ;-----------------------------------------
-        push	eax
-        push	ebx
-        push	ecx
-        push	edx
-        push	esi
+        push eax
+        push ebx
+        push ecx
+        push edx
+        push esi
 
         ;-----------------------------------------
         ; 文字列を描画する

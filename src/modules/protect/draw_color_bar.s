@@ -8,12 +8,12 @@ draw_color_bar:
         ;-----------------------------------------
         ; 【レジスタの保存】
         ;-----------------------------------------
-        push	eax
-        push	ebx
-        push	ecx
-        push	edx
-        push	esi
-        push	edi
+        push eax
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
 
         ;-----------------------------------------
         ; 基準となる位置をレジスタに保存
