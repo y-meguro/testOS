@@ -18,9 +18,9 @@ itoa:
         ;---------------------------------------
         ; 引数を取得
         ;---------------------------------------
-        mov eax, [bp + 8]
-        mov esi, [bp + 12]
-        mov ecx, [bp + 16]
+        mov eax, [ebp + 8]
+        mov esi, [ebp + 12]
+        mov ecx, [ebp + 16]
 
         mov edi, esi
         add edi, ecx
@@ -68,7 +68,7 @@ itoa:
         div ebx
 
         mov esi, edx
-        mov dl, byte[.ascii + esi]
+        mov dl, byte [.ascii + esi]
 
         mov [edi], dl
         dec edi
