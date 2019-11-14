@@ -32,7 +32,6 @@ int_timer:
 
         jmp SS_TASK_0:0
         jmp .10E
-
 .11L:
         jmp SS_TASK_1:0
         jmp .10E
