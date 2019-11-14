@@ -24,6 +24,7 @@
     20                              <1> 
     21                              <1> SP_TASK_0 equ STACK_BASE + (STACK_SIZE * 1)
     22                              <1> SP_TASK_1 equ STACK_BASE + (STACK_SIZE * 2)
+    23                              <1> SP_TASK_2 equ STACK_BASE + (STACK_SIZE * 3)
      5                                  %include "../include/macro.s"
      1                              <1> %macro cdecl 1-*.nolist
      2                              <1>     %rep %0 - 1
