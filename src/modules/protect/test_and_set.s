@@ -1,4 +1,4 @@
-draw_str:
+test_and_set:
         ;-----------------------------------------
         ; 【スタックフレームの構築】
         ;-----------------------------------------
@@ -10,48 +10,29 @@ draw_str:
         ;-----------------------------------------
         push eax
         push ebx
-        push ecx
-        push edx
-        push esi
 
         ;-----------------------------------------
-        ; 文字列を描画する
+        ; テストアンドセット
         ;-----------------------------------------
-        mov ecx, [ebp + 8]
-        mov edx, [ebp + 12]
-        movzx ebx, word [ebp + 16]
-        mov esi, [ebp + 20]
+        mov eax, 0
+        mov ebx, [ebp + 8]
 
-        cld
 .10L:
-        lodsb
-        cmp al, 0
-        je .10E
 
-%ifdef	USE_SYSTEM_CALL
-        int 0x81
-%else
-        cdecl draw_char, ecx, edx, ebx, eax
-%endif
+        lock bts [ebx], eax
+        jnc .10E
 
-        inc ecx
-        cmp ecx, 80
-        jl .12E
-        mov ecx, 0
-        inc edx
-        cmp edx, 30
-        jl .12E
-        mov edx, 0
-.12E:
+.12L:
+
+        bt [ebx], eax
+        jc .12L
+
         jmp .10L
 .10E:
 
         ;-----------------------------------------
         ; 【レジスタの復帰】
         ;-----------------------------------------
-        pop esi
-        pop edx
-        pop ecx
         pop ebx
         pop eax
 
