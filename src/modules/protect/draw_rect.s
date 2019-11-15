@@ -18,10 +18,10 @@ draw_rect:
         ; 引数の取得
         ;-----------------------------------------
         mov eax, [ebp + 8]
-        mov ebx, [ebp +12]
-        mov ecx, [ebp +16]
-        mov edx, [ebp +20]
-        mov esi, [ebp +24]
+        mov ebx, [ebp + 12]
+        mov ecx, [ebp + 16]
+        mov edx, [ebp + 20]
+        mov esi, [ebp + 24]
 
         ;-----------------------------------------
         ; 座標軸の大小を確定
