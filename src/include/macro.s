@@ -56,7 +56,7 @@
         pop eax
 %endmacro
 
-%macro  set_gate 2-* 
+%macro  set_gate 2-*
     push eax
     push edi
 
