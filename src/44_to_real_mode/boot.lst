@@ -39,6 +39,17 @@
     35                              <1> CR3_TASK_4 equ 0x0020_0000
     36                              <1> CR3_TASK_5 equ 0x0020_2000
     37                              <1> CR3_TASK_6 equ 0x0020_4000
+    38                              <1> 
+    39                              <1> FAT_SIZE equ (1024 * 128)
+    40                              <1> ROOT_SIZE equ (1024 * 16)
+    41                              <1> 
+    42                              <1> FAT1_START equ (KERNEL_SIZE)
+    43                              <1> FAT2_START equ (FAT1_START + FAT_SIZE)
+    44                              <1> ROOT_START equ (FAT2_START + FAT_SIZE)
+    45                              <1> FILE_START equ (ROOT_START + ROOT_SIZE)
+    46                              <1> 
+    47                              <1> ATTR_VOLUME_ID equ 0x08
+    48                              <1> ATTR_ARCHIVE equ 0x20
      5                                  %include "../include/macro.s"
      1                              <1> %macro cdecl 1-*.nolist
      2                              <1>     %rep %0 - 1
